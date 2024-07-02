@@ -1,0 +1,19 @@
+[project]
+name = "sucre"
+version = "0.1.0"
+description = "A wrapper around the requests library"
+authors = [
+    {name = "Jorge Gueorguiev Garcia", email = "yefo.akira@twoormore.eu"},
+]
+dependencies = []
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true
