@@ -10,3 +10,12 @@ def test_request(mocker):
     caller = HttpCaller(url, requests.get)
     caller.call()
     get_mock.assert_called_once_with(url)
+
+
+def test_request_with_kwargs(mocker):
+    url = "http://some_url.com"
+    get_mock = mocker.patch("requests.get")
+    get_mock.return_value = {}
+    caller = HttpCaller(url, requests.get)
+    caller.call(headers={}, auth={})
+    get_mock.assert_called_once_with(url, headers={}, auth={})

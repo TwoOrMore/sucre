@@ -7,5 +7,5 @@ class HttpCaller:
         self._url = url
         self._method = method
 
-    def call(self):
-        self._method(self._url)
+    def call(self, **kwargs):
+        self._method(self._url, **kwargs)
