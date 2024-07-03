@@ -8,4 +8,4 @@ class HttpCaller:
         self._method = method
 
     def call(self, **kwargs):
-        self._method(self._url, **kwargs)
+        return self._method(self._url, **kwargs)
