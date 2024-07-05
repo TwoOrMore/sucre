@@ -9,7 +9,6 @@ def setup_response(
     request_mock_method,
     response,
     status_code=200,
-    status_side_effect=[],
     text="",
 ):
     response_mock = mocker.MagicMock(spec=Response)
@@ -55,6 +54,32 @@ def test_we_get_a_valid_response(mocker):
     stub = mocker.stub(name="successful call")
     caller = HttpCaller(url, requests.get)
     caller.success_handler = stub
+
+    caller.call(headers={}, auth={})
+
+    get_mock.assert_called_once_with(url, headers={}, auth={})
+    stub.assert_called_once_with(response_mock)
+
+def test_we_execute_on_4xx(mocker):
+    url = "http://some_url.com"
+    get_mock = mocker.patch("requests.get")
+    response_mock = setup_response(mocker, get_mock, {}, status_code=400)
+    stub = mocker.stub(name="error call")
+    caller = HttpCaller(url, requests.get)
+    caller.error_handler_4xx = stub
+
+    caller.call(headers={}, auth={})
+
+    get_mock.assert_called_once_with(url, headers={}, auth={})
+    stub.assert_called_once_with(response_mock)
+
+def test_we_execute_on_5xx(mocker):
+    url = "http://some_url.com"
+    get_mock = mocker.patch("requests.get")
+    response_mock = setup_response(mocker, get_mock, {}, status_code=500)
+    stub = mocker.stub(name="error call")
+    caller = HttpCaller(url, requests.get)
+    caller.error_handler_5xx = stub
 
     caller.call(headers={}, auth={})
 
